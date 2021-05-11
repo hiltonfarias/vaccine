@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: vaccine
+  namespace: dev-vaccine
+data:
+  DATABASE_SERVER_NAME: "mysql"
+  DATABASE_USER_NAME: "vaccine_api"
+  DATABASE_USER_PASSWORD: "vaccine_api_password"
+  JAVA_OPTS: "--enable-preview -agentlib:jdwp=transport=dt_socket,address=5005,server=y,suspend=n -XX:MaxRAMPercentage=80"

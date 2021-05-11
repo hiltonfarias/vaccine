@@ -1,0 +1,31 @@
+apiVersion: vaccine/v1
+kind: Deployment
+metadata:
+  name: mysql
+  namespace: dev-vaccine
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - image: mysql:5.7
+          name: mysql
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: root_password
+            - name: MYSQL_USER
+              value: vaccine_api
+            - name: MYSQL_PASSWORD
+              value: vaccine_api_password
+            - name: MYSQL_DATABASE
+              value: k8s_vaccine
+          ports:
+            - containerPort: 3306
+              name: mysql

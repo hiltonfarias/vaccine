@@ -1,0 +1,14 @@
+apiVersion: networking.k8s.io/v1beta
+kind: Ingress
+metadata:
+  name: vaccine
+  namespace: dev-vaccine
+spec:
+  rules:
+    - host: vaccine.local
+      http:
+        paths:
+          - path: /vaccine
+            backend:
+              seviceName: vaccine
+              servicePort: 8080

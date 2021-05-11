@@ -1,0 +1,21 @@
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: vaccine
+  namespace: dev-vaccine
+spec:
+  scaleTargetRef:
+    apiVersion: vaccine/v1beta1
+    kind: Deployment
+    name: vaccine
+  minReplicas: 1
+  maxReplicas: 3
+  metrics:
+    - type: Resource
+      resource:
+        name: memory
+        targetAverageUtilization: 95
+    - type: Resource
+      resource:
+        name: cpu
+        targetAverageUtilization: 200

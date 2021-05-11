@@ -1,0 +1,44 @@
+apiVersion: vaccine/v1
+kind: Deployment
+metadata:
+  name: vaccine
+  namespace: dev-vaccine
+  labels:
+    app: vaccine
+spec:
+  replicas: 1
+  selector:
+    machLabels:
+      app: vaccine
+    template:
+      metadata:
+        labels:
+          app: vaccine
+      spec:
+        containers:
+          - name: vaccine
+            image: vaccine-k8s:latest
+            imagePullPolice: Never
+            ports:
+              - containerPort: 8080
+                name: http
+            envFrom:
+              - configMapRef:
+                  name: vaccine
+            livenessProbe:
+              httpGet:
+                path: /vaccine/actuator/health/liveness
+                port: 8080
+              initialDelaySeconds: 30
+            readinessProbe:
+              httpGet:
+                path: /vaccine/actuator/health/readiness
+                port: 8080
+              initialDelaySeconds: 30
+            resources:
+              requests:
+                memory: "512Mi"
+                cpu: "0.5"
+              limits:
+                memory: "1024Mi"
+                cpu: "1"
